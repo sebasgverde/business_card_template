@@ -1,0 +1,90 @@
+%%%%
+%
+% ticket.sty example file for visiting cards
+%
+%%%%
+% use the corresponding paper size for your ticket definition
+\documentclass[a4paper,10pt]{letter}
+
+% load ticket.sty with the appropriate ticket definition
+\usepackage[zw32010,crossmark]{ticket}
+
+% load misc stuff
+\usepackage{graphicx}
+\usepackage{color}
+
+\usepackage{musixtex}
+\usepackage{wasysym}
+
+% define something
+\definecolor{myred}{rgb}{.600,0,0}
+\ticketSize{89}{55}
+
+\renewcommand{\ticketdefault}{%
+}
+
+% now what do you like to put in your ticket
+\newcommand{\vcardfront}[5]{\ticket{%
+    % QR image to your web page
+    \put( 58, 15){\includegraphics[width=27mm,angle=0,origin=bl]{qr.png}}
+    
+    \put( -1, 14){\color{myred}\line(1,0){95}}
+    \put( 2, -2){\color{black}\line(0,1){58}}
+    % page 23 and 24 in http://icking-music-archive.org/software/musixtex/musixdoc.pdf
+    \put(-30, 39){\small   
+        \begin{music}
+        \setlength{\parindent}{0.0 cm}
+        \startextract  
+        % legatos: page 48
+        \vnotes2.8\elemskip
+            \ccl5 
+            \ccl5 
+            \cl5 
+            \clp5 
+            %%legato down
+            % \islurd05\ql 5\tslur05\ccl 5 
+            \isluru05\ql 5\tslur05\ccl 5 
+            \hl5 
+            \isluru05\hlp 5\tslur05\ccl 5
+        \en 
+        \endpiece
+        \zendextract                % terminate excerpt
+        \end{music}
+    }
+    
+    \put(74,47){ 
+    $\frac{?}{\leftarrow{} }\approx \frac{\color{myred}\CIRCLE }{{\color{black}\CIRCLE }}$ }
+    
+    \put( 59, 8){\tiny xxxxxxxx xxx x xx xxxxxxxx}
+    \put( 67, 6){\tiny xxxx x xxxxxx xxx}
+    \put( 4, 10){\small name surname}
+    \put( 4,  6.5){\small company}
+    \put( 4, 3){\small (xxx) xxx xxx xx}
+    \put(4,36){\bfseries\LARGE #1}
+    \put(4,32){\footnotesize #2}
+    \put(4,29){\footnotesize #3}
+    \put(18,20.5){#4}
+ }}
+
+\newcommand{\vcardback}[1]{\ticket{%
+    \put( 7,19){\small%
+        \begin{minipage}[t]{70mm}%
+          {#1}\hss%
+        \end{minipage}}%
+}}
+
+% a counter, which makes life easier...
+\newcounter{numcards}
+
+\begin{document}
+\addtolength{\topmargin}{-.35in}
+\sffamily
+
+% ten cards for the front
+\whiledo{\thenumcards<10}{%
+  \stepcounter{numcards}%
+\vcardfront{nickname}{description line 1}{\& descr line 2}{web page}{}}
+
+\setcounter{numcards}{0}
+
+\end{document}
